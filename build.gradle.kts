@@ -12,7 +12,7 @@ repositories {
 kotlin {
     jvm()
     mingwX64("windows")
-    linuxX64()
+    linuxX64("native")
     /* Targets configuration omitted. 
     *  To find out how to configure the targets, please follow the link:
     *  https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#setting-up-targets */
@@ -20,7 +20,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(kotlin("stdlib-common"))
+                implementation(kotlin("stdlib-common"))
             }
         }
         val commonTest by getting {
@@ -32,7 +32,7 @@ kotlin {
 
         val jvmMain by getting {
             dependencies {
-                api(kotlin("stdlib"))
+                implementation(kotlin("stdlib"))
             }
         }
         val jvmTest by getting {
@@ -41,14 +41,10 @@ kotlin {
             }
         }
 
-        val windowsMain by getting {
-            dependencies {
-            }
-        }
+        val nativeMain by getting
 
-        val linuxX64Main by getting {
-            dependencies {
-            }
+        val windowsMain by getting {
+            dependsOn(nativeMain)
         }
 
         all {
